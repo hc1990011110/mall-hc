@@ -10,7 +10,7 @@
     <description>mall-frontend project for mall</description>
 
     <parent>
-        <groupId>com.hc</groupId>
+        <groupId>com.hc.mall</groupId>
         <artifactId>mall-hc</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
