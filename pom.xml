@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.hc</groupId>
@@ -8,8 +9,6 @@
   <version>1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
-  <name>mall-hc</name>
-  <url>http://maven.apache.org</url>
   <modules>
     <module>mall-frontend</module>
     <module>mall-backend</module>
@@ -35,7 +34,7 @@
     <pagehelper-starter.version>2.1.0</pagehelper-starter.version>
     <pagehelper.version>6.1.0</pagehelper.version>
     <druid.version>1.2.9</druid.version>
-    <hutool.version>5.8.16</hutool.version>
+    <hutool.version>5.8.21</hutool.version>
     <mybatis-generator.version>1.4.2</mybatis-generator.version>
     <mybatis.version>3.5.14</mybatis.version>
     <mybatis-spring-boot-starter.version>3.0.3</mybatis-spring-boot-starter.version>
@@ -224,6 +223,74 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-maven-plugin</artifactId>
+          <version>${spring-boot.version}</version>
+        </plugin>
+        <plugin>
+          <groupId>io.fabric8</groupId>
+          <artifactId>docker-maven-plugin</artifactId>
+          <version>${docker.maven.plugin.version}</version>
+          <executions>
+            <!--如果想在项目打包时构建镜像添加-->
+            <execution>
+              <id>build-image</id>
+              <phase>package</phase>
+              <goals>
+                <goal>build</goal>
+              </goals>
+            </execution>
+          </executions>
+          <configuration>
+            <!-- Docker 远程管理地址-->
+            <dockerHost>${docker.host}</dockerHost>
+            <images>
+              <image>
+                <!--定义镜像名称-->
+                <name>mall-hc/${project.name}:${project.version}</name>
+                <!--定义镜像构建行为-->
+                <build>
+                  <!--定义基础镜像-->
+                  <from>openjdk:17</from>
+                  <args>
+                    <JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
+                  </args>
+                  <!--定义哪些文件拷贝到容器中-->
+                  <assembly>
+                    <!--定义拷贝到容器的目录-->
+                    <targetDir>/</targetDir>
+                    <!--只拷贝生成的jar包-->
+                    <descriptorRef>artifact</descriptorRef>
+                  </assembly>
+                  <!--定义容器启动命令-->
+                  <entryPoint>["java", "-jar","-Dspring.profiles.active=prod","/${project.build.finalName}.jar"]</entryPoint>
+                  <!--定义维护者-->
+                  <maintainer>hc</maintainer>
+                </build>
+              </image>
+            </images>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+    <plugins>
+      <!--解决SpringBoot 3.2 Parameter Name Retention 问题-->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <compilerArgs>
+            <arg>-parameters</arg>
+          </compilerArgs>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 
   <!--使用aliyun的镜像源提升依赖下载速度-->
   <repositories>
