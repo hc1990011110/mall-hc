@@ -77,7 +77,7 @@
                 <pattern>
                     <pattern>
                         {
-                        "project": "mall-hc12345",
+                        "project": "mall-hc",
                         "level": "%level",
                         "service": "${APP_NAME:-}",
                         "pid": "${PID:-}",
