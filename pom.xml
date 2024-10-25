@@ -12,6 +12,7 @@
   <modules>
     <module>mall-frontend</module>
     <module>mall-backend</module>
+      <module>mall-gateway</module>
   </modules>
 
   <parent>
@@ -47,6 +48,7 @@
     <minio.version>8.4.5</minio.version>
     <knife4j.version>4.5.0</knife4j.version>
     <sa-token.version>1.37.0</sa-token.version>
+    <mall-common.version>1.0-SNAPSHOT</mall-common.version>
   </properties>
 
   <dependencies>
@@ -95,6 +97,12 @@
         <version>${spring-cloud-alibaba.version}</version>
         <type>pom</type>
         <scope>import</scope>
+      </dependency>
+      <!--mall通用模块-->
+      <dependency>
+        <groupId>com.macro.mall</groupId>
+        <artifactId>mall-common</artifactId>
+        <version>${mall-common.version}</version>
       </dependency>
       <!--MyBatis分页插件starter-->
       <dependency>
