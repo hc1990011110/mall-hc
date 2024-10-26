@@ -5,7 +5,7 @@ import lombok.*;
 import java.util.List;
 
 /**
- * @auther macrozheng
+ * @auther hc
  * @description 权限框架中使用的用户信息封装类
  * @date 2024/1/30
  * @github https://github.com/macrozheng
