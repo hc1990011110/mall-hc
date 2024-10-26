@@ -80,7 +80,7 @@ rabbitmq:
 #    enabled: true
 #  group-configs:
 #    - group: 'mall-portal'
-#      packages-to-scan: com.macro.mall.portal.controller
+#      packages-to-scan: com.hc.mall.portal.controller
 #sa-token:
 #  # token名称 (同时也是cookie名称)
 #  token-name: Authorization

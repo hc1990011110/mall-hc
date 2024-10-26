@@ -31,7 +31,7 @@ import java.util.Set;
  * @auther hc
  * @description Sa-Token相关配置
  * @date 2023/11/28
- * @github https://github.com/macrozheng
+ * @github https://github.com/hc1990011110
  */
 @Configuration
 public class SaTokenConfig {

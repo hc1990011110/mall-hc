@@ -12,7 +12,7 @@ import java.util.List;
  * @auther hc
  * @description 自定义权限验证接口扩展
  * @date 2024/1/25
- * @github https://github.com/macrozheng
+ * @github https://github.com/hc1990011110
  */
 @Component
 public class StpInterfaceImpl implements StpInterface {

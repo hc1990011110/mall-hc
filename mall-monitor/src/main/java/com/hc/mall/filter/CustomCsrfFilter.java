@@ -29,10 +29,10 @@ import org.springframework.web.util.WebUtils;
 import java.io.IOException;
 
 /**
- * @auther macrozheng
+ * @auther hc
  * @description 自定义CSRF过滤器
  * @date 2024/1/16
- * @github https://github.com/macrozheng
+ * @github https://github.com/hc1990011110
  */
 public class CustomCsrfFilter extends OncePerRequestFilter {
 

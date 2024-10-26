@@ -23,10 +23,10 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import java.util.UUID;
 
 /**
- * @auther macrozheng
+ * @auther hc
  * @description Spring Boot Admin的Security相关配置
  * @date 2024/1/16
- * @github https://github.com/macrozheng
+ * @github https://github.com/hc1990011110
  */
 @Configuration(proxyBeanMethods = false)
 public class SecuritySecureConfig {
