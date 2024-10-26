@@ -5,6 +5,7 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root #设置root帐号密码
+      MYSQL_DATABASE: mall              # 初始数据库名称
     ports:
       - 3307:3306
     volumes:

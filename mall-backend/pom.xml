@@ -18,7 +18,7 @@
     <dependencies>
         <dependency>
             <groupId>com.hc.mall</groupId>
-            <artifactId>mall-common</artifactId>
+            <artifactId>mall-mbg</artifactId>
         </dependency>
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
