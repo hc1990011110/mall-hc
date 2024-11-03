@@ -330,7 +330,7 @@ public class OmsPortalOrderServiceImpl implements OmsPortalOrderService {
         OmsOrderSetting orderSetting = orderSettingMapper.selectByPrimaryKey(1L);
         long delayTimes = orderSetting.getNormalOrderOvertime() * 60 * 1000;
         //发送延迟消息
-        cancelOrderSender.sendMessage(orderId, delayTimes);
+        cancelOrderSender.sendMessage(orderId, 5000);
     }
 
     @Override
@@ -394,6 +394,8 @@ public class OmsPortalOrderServiceImpl implements OmsPortalOrderService {
 
     @Override
     public OmsOrderDetail detail(Long orderId) {
+        //发送延迟消息取消订单
+        sendDelayMessageCancelOrder(orderId);
         OmsOrder omsOrder = orderMapper.selectByPrimaryKey(orderId);
         OmsOrderItemExample example = new OmsOrderItemExample();
         example.createCriteria().andOrderIdEqualTo(orderId);

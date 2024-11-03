@@ -21,6 +21,6 @@ public class CancelOrderReceiver {
     @RabbitHandler
     public void handle(Long orderId){
         portalOrderService.cancelOrder(orderId);
-        LOGGER.info("process orderId:{}",orderId);
+        LOGGER.info("process orderId:{} FUCK!!!",orderId);
     }
 }
