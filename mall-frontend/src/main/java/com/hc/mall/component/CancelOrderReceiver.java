@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
 /**
@@ -21,6 +22,7 @@ public class CancelOrderReceiver {
     @RabbitHandler
     public void handle(Long orderId){
         portalOrderService.cancelOrder(orderId);
-        LOGGER.info("process orderId:{} FUCK!!!",orderId);
+        LOGGER.info("process orderId:{} RabbitListener!!!",orderId);
     }
 }
+

@@ -8,6 +8,7 @@ import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessagePostProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
 /**
@@ -33,3 +34,4 @@ public class CancelOrderSender {
         LOGGER.info("send orderId:{}",orderId);
     }
 }
+

@@ -6,6 +6,7 @@ import com.github.pagehelper.PageHelper;
 import com.hc.mall.common.api.CommonPage;
 import com.hc.mall.common.exception.Asserts;
 import com.hc.mall.common.service.RedisService;
+import com.hc.mall.component.CancelOrderKafkaSender;
 import com.hc.mall.mapper.*;
 import com.hc.mall.model.*;
 import com.hc.mall.component.CancelOrderSender;
@@ -65,6 +66,8 @@ public class OmsPortalOrderServiceImpl implements OmsPortalOrderService {
     private OmsOrderItemMapper orderItemMapper;
     @Autowired
     private CancelOrderSender cancelOrderSender;
+    @Autowired
+    private CancelOrderKafkaSender cancelOrderKafkaSender;
 
     @Override
     public ConfirmOrderResult generateConfirmOrder(List<Long> cartIds) {
@@ -330,7 +333,8 @@ public class OmsPortalOrderServiceImpl implements OmsPortalOrderService {
         OmsOrderSetting orderSetting = orderSettingMapper.selectByPrimaryKey(1L);
         long delayTimes = orderSetting.getNormalOrderOvertime() * 60 * 1000;
         //发送延迟消息
-        cancelOrderSender.sendMessage(orderId, 5000);
+//        cancelOrderSender.sendMessage(orderId, 5000);
+        cancelOrderKafkaSender.sendOrderTimeoutMessage(orderId);
     }
 
     @Override

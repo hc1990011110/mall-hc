@@ -97,3 +97,45 @@ services:
     ports:
       - 8849:8848
       - 9849:9848
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    ports:
+      - "2181:2181"
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181    # 确保设置此变量
+      ZOOKEEPER_TICK_TIME: 2000
+    volumes:
+      - ./mydata/zookeeper/data:/data
+      - ./mydata/zookeeper/datalog:/datalog
+
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    ports:
+      - "9092:9092"
+    user: "0:0"  # root 用户
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_LISTENERS: PLAINTEXT_LOCAL://0.0.0.0:9092,PLAINTEXT_DOCKER://kafka:29092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT_LOCAL://localhost:9092,PLAINTEXT_DOCKER://kafka:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT_LOCAL:PLAINTEXT,PLAINTEXT_DOCKER:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT_DOCKER
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      ALLOW_PLAINTEXT_LISTENER: yes
+      KAFKA_MESSAGE_MAX_BYTES: 200000000           # 最大消息大小
+      KAFKA_SOCKET_REQUEST_MAX_BYTES: 200000000    # 监听连接的最大请求大小
+    depends_on:
+      - zookeeper
+    volumes:
+      - ./mydata/kafka:/var/lib/kafka/data
+  kafka-ui:
+    image: provectuslabs/kafka-ui:latest
+    environment:
+      KAFKA_CLUSTERS_0_NAME: local
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:29092
+      KAFKA_CLUSTERS_0_ZOOKEEPER: zookeeper:2181
+      KAFKA_CLUSTERS_0_READONLY: false
+    ports:
+      - "18080:8080"
+    depends_on:
+      - kafka

@@ -187,6 +187,7 @@
     <logger name="com.alibaba.nacos.client.naming" level="INFO"/>
     <logger name="com.alibaba.nacos" level="WARN"/>
     <logger name="io.lettuce.core.protocol" level="WARN"/>
+    <logger name="org.apache.kafka.clients" level="INFO"/>
 
     <root level="DEBUG">
         <appender-ref ref="CONSOLE"/>

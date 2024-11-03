@@ -34,6 +34,27 @@ spring:
     virtual-host: /mall
     username: mall
     password: mall
+  kafka:
+    bootstrap-servers: localhost:9092  # Kafka broker 的地址，可以是多个 broker，用逗号分隔
+    consumer:
+      group-id: my-group               # 消费者组 ID
+      auto-offset-reset: earliest       # 当没有初始偏移量或偏移量已过期时，从最早的消息开始消费
+      enable-auto-commit: false          # 是否自动提交偏移量，默认为 true
+#      auto-commit-interval: 100         # 自动提交偏移量的间隔时间（毫秒）
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer   # 消费者 key 反序列化器
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer # 消费者 value 反序列化器
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer       # 生产者 key 序列化器
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer     # 生产者 value 序列化器
+      retries: 3                            # 发送失败的重试次数
+      acks: all                              # 确认级别（all 表示所有副本都确认）
+      batch-size: 16384                      # 批处理大小（字节）
+      linger-ms: 1                           # 批量发送等待时间（毫秒）
+      buffer-memory: 33554432                # 生产者缓冲区的内存大小（字节）
+    template:
+      default-topic: my-default-topic        # 设置默认的主题，可以省略在代码中指定主题的参数
+    listener:
+      ack-mode: MANUAL  # 设置 AckMode 为 MANUAL 手动确认
 mybatis:
   mapper-locations:
     - classpath:dao/*.xml
