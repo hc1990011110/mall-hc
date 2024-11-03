@@ -69,23 +69,23 @@ redis:
 #  bucketName: mall #存储桶名称
 #  accessKey: minioadmin #访问的key
 #  secretKey: minioadmin #访问的秘钥
-#springdoc:
-#  swagger-ui:
-#    # 修改Swagger UI路径
-#    path: /swagger-ui.html
-#    # 开启Swagger UI界面
-#    enabled: true
-#    # 用于配置tag和operation的展开方式，这里配置为都不展开
-#    doc-expansion: 'none'
-#  api-docs:
-#    # 修改api-docs路径
-#    path: /v3/api-docs
-#    # 开启api-docs
-#    enabled: true
-#  group-configs:
-#    - group: 'default'
-#      packages-to-scan: com.hc.mall.controller
-#  default-flat-param-object: false
+springdoc:
+  swagger-ui:
+    # 修改Swagger UI路径
+    path: /swagger-ui.html
+    # 开启Swagger UI界面
+    enabled: true
+    # 用于配置tag和operation的展开方式，这里配置为都不展开
+    doc-expansion: 'none'
+  api-docs:
+    # 修改api-docs路径
+    path: /v3/api-docs
+    # 开启api-docs
+    enabled: true
+  group-configs:
+    - group: 'mall-backend'
+      packages-to-scan: com.hc.mall.controller
+  default-flat-param-object: false
 sa-token:
   # token名称 (同时也是cookie名称)
   token-name: Authorization
