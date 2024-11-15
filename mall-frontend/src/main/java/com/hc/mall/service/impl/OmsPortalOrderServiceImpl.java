@@ -336,9 +336,9 @@ public class OmsPortalOrderServiceImpl implements OmsPortalOrderService {
         OmsOrderSetting orderSetting = orderSettingMapper.selectByPrimaryKey(1L);
         long delayTimes = orderSetting.getNormalOrderOvertime() * 60 * 1000;
         //发送延迟消息
-//        cancelOrderSender.sendMessage(orderId, 5000);
+        cancelOrderSender.sendMessage(orderId, 5000);
 //        cancelOrderKafkaSender.sendOrderTimeoutMessage(orderId);
-        cancelOrderRocketSender.sendSimpleMessage("order_topic", orderId.toString());
+//        cancelOrderRocketSender.sendSimpleMessage("order_topic", orderId.toString());
     }
 
     @Override
