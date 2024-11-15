@@ -1,0 +1,11 @@
+global:
+  scrape_interval: 15s  # 设置 Prometheus 抓取数据的频率（每 15 秒）
+scrape_configs:
+  - job_name: 'spring-cloud-alibaba'  # 监控任务的名称
+    metrics_path: '/actuator/prometheus'  # Prometheus 格式的指标端点
+    static_configs:
+      - targets:
+        - 'host.docker.internal:9080'  # 微服务1
+        - 'host.docker.internal:9081'  # 微服务2
+        - 'host.docker.internal:9082'  # 微服务3
+        # 根据实际情况添加所有需要监控的微服务地址

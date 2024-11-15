@@ -139,3 +139,54 @@ services:
       - "18080:8080"
     depends_on:
       - kafka
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml  # 映射根目录的 prometheus.yml
+    ports:
+      - "9090:9090"
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"  # Grafana 默认端口
+    depends_on:
+      - prometheus  # 确保 Prometheus 在 Grafana 之前启动
+  # RocketMQ Nameserver
+  rocketmq-nameserver:
+    image: apache/rocketmq:latest
+    ports:
+      - "9876:9876" # 默认端口
+    environment:
+      - JAVA_OPT_EXT=-Duser.home=/home/rocketmq -server -Xms512m -Xmx512m -Xmn256m
+    volumes:
+      - ./mydata/rocketmq/nameserver/logs:/home/rocketmq/logs  # 日志存储目录
+      - ./mydata/rocketmq/nameserver/store:/home/rocketmq/store  # 数据存储目录
+    command: "sh mqnamesrv"
+  # RocketMQ Broker
+  rocketmq-broker:
+    image: apache/rocketmq:latest
+    ports:
+      - "10911:10911"      # Broker RPC 端口
+      - "10909:10909"      # Broker HA 端口
+      - "10912:10912"      # Broker admin 端口（可选）
+    environment:
+      - NAMESRV_ADDR=rocketmq-nameserver:9876 # 指定 Nameserver 地址
+      - JAVA_OPT_EXT=-Duser.home=/home/rocketmq -server -Xms512m -Xmx512m -Xmn256m
+      - ROCKETMQ_BROKER_ROLE=ASYNC_MASTER
+      - ROCKETMQ_ENABLE_DLEQ=true # 启用延迟队列
+    depends_on:
+      - rocketmq-nameserver
+    volumes:
+      - ./mydata/rocketmq/broker/logs:/home/rocketmq/logs
+      - ./mydata/rocketmq/broker/store:/home/rocketmq/store
+    command: "sh mqbroker"
+  rocketmq-dashboard:
+    image: apacherocketmq/rocketmq-dashboard:latest
+    ports:
+      - "8080:8080"       # Dashboard Web 端口
+    environment:
+      - JAVA_OPTS=-Drocketmq.namesrv.addr=rocketmq-nameserver:9876
+    depends_on:
+      - rocketmq-nameserver
+    restart: always
+
