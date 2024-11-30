@@ -52,6 +52,8 @@
     <knife4j.version>4.5.0</knife4j.version>
     <sa-token.version>1.37.0</sa-token.version>
     <rocketmq.version>2.3.0</rocketmq.version>
+    <dubbo.version>3.2.1</dubbo.version>
+    <prometheus.version>0.16.0</prometheus.version>
     <mall-common.version>1.0-SNAPSHOT</mall-common.version>
     <mall-mbg.version>1.0-SNAPSHOT</mall-mbg.version>
   </properties>
@@ -61,10 +63,10 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-actuator</artifactId>
     </dependency>
-    <dependency>
-      <groupId>io.micrometer</groupId>
-      <artifactId>micrometer-registry-prometheus</artifactId>
-    </dependency>
+<!--    <dependency>-->
+<!--      <groupId>io.micrometer</groupId>-->
+<!--      <artifactId>micrometer-registry-prometheus</artifactId>-->
+<!--    </dependency>-->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-aop</artifactId>
@@ -248,6 +250,11 @@
         <groupId>cn.dev33</groupId>
         <artifactId>sa-token-jwt</artifactId>
         <version>${sa-token.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.dubbo</groupId>
+        <artifactId>dubbo-spring-boot-starter</artifactId>
+        <version>${dubbo.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>

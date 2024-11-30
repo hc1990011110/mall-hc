@@ -2,6 +2,7 @@ package com.hc.mall.controller;
 
 import com.hc.mall.common.api.CommonPage;
 import com.hc.mall.common.api.CommonResult;
+import com.hc.mall.common.service.HelloService;
 import com.hc.mall.domain.ConfirmOrderResult;
 import com.hc.mall.domain.OmsOrderDetail;
 import com.hc.mall.domain.OrderParam;
@@ -11,6 +12,9 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.apache.dubbo.config.annotation.DubboReference;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -26,8 +30,22 @@ import java.util.Map;
 @Tag(name = "OmsPortalOrderController", description = "订单管理")
 @RequestMapping("/order")
 public class OmsPortalOrderController {
+    private static final Logger LOGGER = LoggerFactory.getLogger(OmsPortalOrderController.class);
     @Autowired
     private OmsPortalOrderService portalOrderService;
+
+    @DubboReference // 远程引用 Dubbo 服务
+    private HelloService helloService;
+
+
+    @Operation(summary = "测试")
+    @RequestMapping(value = "/test/{orderId}", method = RequestMethod.GET)
+    @ResponseBody
+    public String test(@PathVariable Long orderId) {
+        String result = helloService.hello("mother fucker " + orderId);
+        LOGGER.info("FUCK: {}", result);
+        return result;
+    }
 
     @Operation(summary = "根据购物车信息生成确认单信息")
     @RequestMapping(value = "/generateConfirmOrder", method = RequestMethod.POST)

@@ -3,3 +3,15 @@ spring:
     active: dev
   application:
     name: mall-gateway
+dubbo:
+  application:
+    name: mall-gateway-dubbo
+  registry:
+    address: nacos://localhost:8849
+  provider:
+    timeout: 3000
+  consumer:
+    timeout: 3000
+    check: false
+#  protocol:
+#    port: 20881

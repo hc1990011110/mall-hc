@@ -3,3 +3,13 @@ spring:
     active: dev
   application:
     name: mall-frontend
+dubbo:
+  application:
+    name: mall-frontend-dubbo
+  registry:
+    address: nacos://localhost:8849
+  provider:
+    timeout: 3000
+  consumer:
+    timeout: 3000
+    check: false
